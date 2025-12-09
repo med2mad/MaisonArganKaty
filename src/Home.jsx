@@ -385,7 +385,7 @@ function Home() {
             <div className="row">
               <div className="col-md-12">
                 <div className="banner-blocks">
-                  <div className="banner-ad large bg-info block-1">
+                  <div className="zzzz large bg-info block-1">
                     <div className="swiper main-swiper">
                       <div className="swiper-wrapper">
                         <div className="swiper-slide">
@@ -406,7 +406,7 @@ function Home() {
                     </div>
                   </div>
 
-                  <div className="banner-ad bg-success-subtle block-2" style={{ background: "url('images/ad-image-1.png') no-repeat", backgroundPosition: 'right bottom' }}>
+                  <div className="zzzz bg-success-subtle block-2" style={{ background: "url('images/ad-image-1.png') no-repeat", backgroundPosition: 'right bottom' }}>
                     <div className="row banner-content p-5">
                       <div className="content-wrapper col-md-7">
                         <div className="categories sale mb-3 pb-3">15% off</div>
@@ -416,7 +416,7 @@ function Home() {
                     </div>
                   </div>
 
-                  <div className="banner-ad bg-danger block-3" style={{ background: "url('images/ad-image-2.png') no-repeat", backgroundPosition: 'right bottom' }}>
+                  <div className="zzzz bg-danger block-3" style={{ background: "url('images/ad-image-2.png') no-repeat", backgroundPosition: 'right bottom' }}>
                     <div className="row banner-content p-5">
                       <div className="content-wrapper col-md-7">
                         <div className="categories sale mb-3 pb-3">10% off</div>
@@ -459,7 +459,7 @@ function Home() {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-6">
-                <div className="banner-ad bg-danger mb-3" style={{ background: "url('images/ad-image-3.png')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right' }}>
+                <div className="zzzz bg-danger mb-3" style={{ background: "url('images/ad-image-3.png')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right' }}>
                   <div className="banner-content p-5">
                     <div className="categories text-primary fs-3 fw-bold">{t('upto25Off')}</div>
                     <h3 className="banner-title">{t('honey')}</h3>
@@ -470,7 +470,7 @@ function Home() {
               </div>
 
               <div className="col-md-6">
-                <div className="banner-ad bg-info" style={{ background: "url('images/ad-image-4.png')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right' }}>
+                <div className="zzzz bg-info" style={{ background: "url('images/ad-image-4.png')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right' }}>
                   <div className="banner-content p-5">
                     <div className="categories text-primary fs-3 fw-bold">{t('upto25Off')}</div>
                     <h3 className="banner-title">{t('organic100')}</h3>

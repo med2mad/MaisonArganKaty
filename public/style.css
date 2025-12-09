@@ -417,23 +417,23 @@ h6 {
 }
 
 /* banner ad */
-.banner-ad {
+.zzzz {
   position: relative;
   overflow: hidden;
   border-radius: 12px;
 }
 
-.banner-ad.blue {
+.zzzz.blue {
   background: #e6f3fb;
 }
 
-.banner-ad .swiper-pagination {
+.zzzz .swiper-pagination {
   bottom: 40px;
   left: 0;
   right: 0;
 }
 
-.banner-ad .swiper-pagination .swiper-pagination-bullet {
+.zzzz .swiper-pagination .swiper-pagination-bullet {
   width: 16px;
   height: 16px;
   margin: 4px;
@@ -442,34 +442,34 @@ h6 {
   transition: background 0.3s ease-out;
 }
 
-.banner-ad .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+.zzzz .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background: #FFC43F;
 }
 
-.banner-ad .swiper-slide {
+.zzzz .swiper-slide {
   min-height: 630px;
   display: flex;
 }
 
-/* .banner-ad .banner-content {
+/* .zzzz .banner-content {
   padding: 52px;
 }
-.banner-ad.large .banner-content {
+.zzzz.large .banner-content {
   padding: 90px;
 } */
-.banner-ad .banner-content .categories {
+.zzzz .banner-content .categories {
   font-family: 'Garamond';
   font-size: 37px;
   text-transform: capitalize;
   color: var(--dark-color);
 }
 
-.banner-ad .banner-content .sale {
+.zzzz .banner-content .sale {
   position: relative;
   display: inline-block;
 }
 
-.banner-ad .banner-content .sale:before {
+.zzzz .banner-content .sale:before {
   content: '';
   width: 80px;
   border-bottom: 1px solid #111;
@@ -477,7 +477,7 @@ h6 {
   bottom: 6px;
 }
 
-.banner-ad .banner-content .sale:after {
+.zzzz .banner-content .sale:after {
   content: 'SALE';
   font-family: var(--body-font);
   position: absolute;
@@ -490,16 +490,16 @@ h6 {
   right: 0;
 }
 
-.banner-ad .banner-content .banner-title {
+.zzzz .banner-content .banner-title {
   letter-spacing: 0.02em;
   font-size: 33px;
 }
 
-.banner-ad.large .banner-content .categories {
+.zzzz.large .banner-content .categories {
   color: var(--accent-color);
 }
 
-.banner-ad.large .banner-content .banner-title {
+.zzzz.large .banner-content .banner-title {
   font-size: 54px;
 }
 
