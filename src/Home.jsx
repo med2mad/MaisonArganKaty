@@ -4,7 +4,7 @@ import Products from './Products';
 import Footer from './Footer';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from "react-i18next";
-import { productService } from './services/supabaseClient';
+import { productService, orderService } from './services/supabaseClient';
 
 function Home() {
 

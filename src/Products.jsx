@@ -19,11 +19,14 @@ function Products({ products, onAddToCart, setProducts }) {
     );
   };
 
+  // Sort products by the "order" field
+  const sortedProducts = [...products].sort((a, b) => (a.order || 0) - (b.order || 0));
+
   return (
     <>
-      <div className="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-3">
-        {products.map((product, index) => (
-          <div className="col" key={index}>
+      <div className="product-grid row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-3">
+        {sortedProducts.map((product, index) => (
+          <div className="col" key={product.id || index}>
             <div className="product-item">
               <span className="badge bg-success position-absolute m-3">
                 {product.promo > 0 ? -Math.round(product.promo) + '%' : ''}
@@ -37,10 +40,16 @@ function Products({ products, onAddToCart, setProducts }) {
                   />
                 </a>
               </figure>
-              <h3 style={{ cursor: 'default' }} className="productTitle fw-bold fs-5 text-truncate mb-1">
+              <h3
+                style={{ cursor: 'default' }}
+                className={`productTitle fw-bold fs-5 mb-1 ${isMobile ? 'mobile-title' : ''}`}
+                title={product[localStorage.getItem('name') || 'nameEN']}
+              >
                 {product[localStorage.getItem('name') || 'nameEN']}
               </h3>
-              <div style={{ minHeight: '65px', fontStyle: 'italic' }}>{product[localStorage.getItem('description') || 'descriptionEN']}</div>
+              {!isMobile &&
+                <div style={{ minHeight: '65px', fontStyle: 'italic' }}>{product[localStorage.getItem('description') || 'descriptionEN']}</div>
+              }
               <div className="price">{product.price} DH</div>
               <div className="product-actions">
                 {/* Hide quantity selection on mobile */}
@@ -87,7 +96,7 @@ function Products({ products, onAddToCart, setProducts }) {
                     onClick={() => onAddToCart(product.id, product.quantity)}
                     className="btn btn-primary add-to-cart-btn"
                   >
-                    {t('addToCart')} <svg xmlns="http://www.w3.org/2000/svg" width="32" height="25" viewBox="0 0 24 24"><path fill="currentColor" d="M21.5 15a3 3 0 0 0-1.9-2.78l1.87-7a1 1 0 0 0-.18-.87A1 1 0 0 0 20.5 4H6.8l-.33-1.26A1 1 0 0 0 5.5 2h-2v2h1.23l2.48 9.26a1 1 0 0 0 1 .74H18.5a1 1 0 0 1 0 2h-13a1 1 0 0 0 0 2h1.18a3 3 0 1 0 5.64 0h2.36a3 3 0 1 0 5.82 1a2.94 2.94 0 0 0-.4-1.47A3 3 0 0 0 21.5 15Zm-3.91-3H9L7.34 6H19.2ZM9.5 20a1 1 0 1 1 1-1a1 1 0 0 1-1 1Zm8 0a1 1 0 1 1 1-1a1 1 0 0 1-1 1Z" /></svg>
+                    {t('addToCart')} <svg xmlns="http://www.w3.org/2000/svg" width="32" height="25" viewBox="0 0 24 24"><path fill="currentColor" d="M21.5 15a3 3 0 0 0-1.9-2.78l1.87-7a1 1 0 0 0-.18-.87A1 1 0 0 0 20.5 4H6.8l-.33-1.26A1 1 0 0 0 5.5 2h-2v2h1.23l2.48 9.26a1 1 0 0 0 1 .74H18.5a1 1 0 0 1 0 2h-13a1 1 0 0 0 0 2h1.18a3 3 0 1 0 5.64 0h2.36a3 3 0 1 0 5.82 1a2.94 2.94 0 0 0-.4-1.47A3 3 0 0 0 21.5 15Zm-3.91-3H9L7.33 6H19.2ZM9.5 20a1 1 0 1 1 1-1a1 1 0 0 1-1 1Zm8 0a1 1 0 1 1 1-1a1 1 0 0 1-1 1Z" /></svg>
                   </button>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 .zzz {
-  height: 260px !important;
+  height: 150px !important;
   max-height: none !important;
-  object-fit: fill !important;
+  object-fit: cover !important;
   border-radius: 10px;
 }
 
@@ -60,7 +60,7 @@ select.status-select {
   text-align: center;
 
   white-space: nowrap;
-  overflow: visible;
+  overflow: scroll;
   max-width: 100%;
 
   letter-spacing: 0.5px;
@@ -70,16 +70,51 @@ select.status-select {
   color: #2c3e50;
   /* Dark gray for better contrast */
 
-  display: inline-block;
+  display: block;
   padding-bottom: 5px;
   border-bottom: 2px solid #007bff;
   /* or your theme color */
+
+  position: relative;
+  cursor: pointer;
+}
+
+.productTitle:hover {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.productTitle:hover::-webkit-scrollbar {
+  height: 4px;
+}
+
+.productTitle:hover::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 2px;
+}
+
+/* For mobile devices (when detected by JS), show full text without line breaks */
+.productTitle.mobile-title {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+/* For mobile devices using CSS media query as fallback */
+@media (max-width: 768px) {
+  .productTitle {
+    white-space: nowrap;
+    word-break: keep-all;
+  }
 }
 
 .productTitle:hover {
   color: #007bff;
   /* or your theme color */
   cursor: pointer;
+}
+
+.productTitle:hover .title-text {
+  animation-play-state: paused;
 }
 
 @media (max-width: 768px) {
@@ -229,9 +264,9 @@ select.status-select {
 }
 
 .zzz {
-  height: 260px !important;
+  height: 150px !important;
   max-height: none !important;
-  object-fit: fill !important;
+  object-fit: cover !important;
   border-radius: 10px;
   transition: transform 0.3s ease;
   /* Add transition */
