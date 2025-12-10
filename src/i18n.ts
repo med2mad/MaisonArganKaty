@@ -36,6 +36,7 @@ i18n.use(initReactI18next).init({
         // Products
         trendingProducts: "Trending Products",
         addToCart: "Add to Cart",
+        loadingProducts: "Loading products",
 
         // Ads
         upto25Off: "Upto 25% Off",
@@ -116,6 +117,7 @@ i18n.use(initReactI18next).init({
         // Products
         trendingProducts: "Produits Tendances",
         addToCart: "Ajouter au panier",
+        loadingProducts: "Chargement des produits",
 
         // Ads
         upto25Off: "Jusqu'à 25% de Réduction",
@@ -196,6 +198,7 @@ i18n.use(initReactI18next).init({
         // Products
         trendingProducts: "热门产品",
         addToCart: "添加到购物车",
+        loadingProducts: "正在加载产品",
 
         // Ads
         upto25Off: "高达25%折扣",

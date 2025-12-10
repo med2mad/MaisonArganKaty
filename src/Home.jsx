@@ -19,15 +19,20 @@ function Home() {
   });
 
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setIsLoading(true);
         const data = await productService.getProducts();
         setProducts(data.map(product => ({ ...product, quantity: 1 })));
       } catch (error) {
         console.error('Error fetching products:', error);
         // Fallback to an empty array or show an error message
         setProducts([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -454,7 +459,14 @@ function Home() {
                 </div>
                 <div className="tab-content" id="nav-tabContent">
                   <div className="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
-                    <Products products={products} onAddToCart={onAddToCart} setProducts={setProducts} />
+                    {isLoading ? (
+                      <div className="text-center my-5 py-5">
+                        <img src="images/spinner.gif" alt="Loading..." style={{width: '60px', height: '60px'}} />
+                        <p className="mt-3">{t('loadingProducts')}...</p>
+                      </div>
+                    ) : (
+                      <Products products={products} onAddToCart={onAddToCart} setProducts={setProducts} />
+                    )}
                   </div>
                   <div className="tab-pane fade" id="nav-fruits" role="tabpanel" aria-labelledby="nav-fruits-tab"></div>
                   <div className="tab-pane fade" id="nav-juices" role="tabpanel" aria-labelledby="nav-juices-tab"></div>
