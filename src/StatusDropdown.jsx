@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { orderService } from './services/supabaseClient';
 
 function StatusDropdown({ currentStatus, orderId, onStatusChange }) {
   const [status, setStatus] = useState(currentStatus);
@@ -28,20 +29,7 @@ function StatusDropdown({ currentStatus, orderId, onStatusChange }) {
     setIsUpdating(true);
 
     try {
-      // const _UrlPort = `http://localhost:5081/orders/${orderId}/status`;
-      // const _UrlPort = `http://localhost:8000/orders/${orderId}/status`;
-      // const _UrlPort = `https://mak.ct.ws/orders/${orderId}/status`;
-      const _UrlPort = "/api/orders/${orderId}/status";
-
-      const response = await fetch(_UrlPort, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: newStatus })
-      });
-
-      if (!response.ok) throw new Error('Update failed');
+      await orderService.updateOrderStatus(orderId, newStatus);
 
       setStatus(newStatus);
       onStatusChange && onStatusChange(orderId, newStatus);

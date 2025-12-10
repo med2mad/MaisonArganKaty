@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Footer2 from './Footer2';
+import { orderService } from './services/supabaseClient';
 
 function OrderDetail() {
   const { id } = useParams();
@@ -10,16 +11,10 @@ function OrderDetail() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // const _UrlPort = "http://localhost:5081";
-  // const _UrlPort = "http://localhost:8000";
-  // const _UrlPort = "https://mak.ct.ws";
-  const _UrlPort = "/api/";
-
   const handleDelete = async () => {
     if (window.confirm('Delete this order?')) {
       try {
-        const response = await fetch(`${_UrlPort}/orders/${order.id}`, { method: 'DELETE' });
-        if (!response.ok) throw new Error('Delete failed');
+        await orderService.deleteOrder(order.id);
         alert('Order deleted successfully');
         navigate('/dashboard/orders');
       } catch (error) {
@@ -32,12 +27,7 @@ function OrderDetail() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const response = await fetch(`${_UrlPort}/orders/${id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch order');
-        }
-        const data = await response.json();
-        console.log('Fetched order data:', data.order_products);
+        const data = await orderService.getOrderWithProducts(id);
         setOrder(data);
       } catch (err) {
         setError(err.message);

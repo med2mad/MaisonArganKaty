@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import StatusDropdown from './StatusDropdown';
 import Footer2 from './Footer2';
+import { orderService } from './services/supabaseClient';
 
 function OrdersDashboard() {
   const correctPassword = '1234';
@@ -57,13 +58,7 @@ function OrdersDashboard() {
   const handleDeleteOrder = async (orderId) => {
     if (window.confirm('Delete this order?')) {
       try {
-        // const _UrlPort = `http://localhost:5081/orders/${orderId}`;
-        // const _UrlPort = `http://localhost:8000/orders/${orderId}`;
-        // const _UrlPort = `https://mak.ct.ws/orders/${orderId}`;
-        const _UrlPort = `/api/orders`;
-
-        const response = await fetch(_UrlPort, { method: 'DELETE' });
-        if (!response.ok) throw new Error('Delete failed');
+        await orderService.deleteOrder(orderId);
         setOrders(orders.filter(order => order.id !== orderId));
         alert('Order deleted successfully');
       }
@@ -77,16 +72,7 @@ function OrdersDashboard() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        // const _UrlPort = 'http://localhost:5081/orders';
-        // const _UrlPort = 'http://localhost:8000/orders';
-        // const _UrlPort = 'https://mak.ct.ws/orders';
-        const _UrlPort = "/api/orders";
-
-        const response = await fetch(_UrlPort);
-        if (!response.ok) {
-          throw new Error('Failed to fetch orders');
-        }
-        const data = await response.json();
+        const data = await orderService.getOrders();
         setOrders(data);
       } catch (err) {
         setError1(err.message);

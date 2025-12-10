@@ -4,13 +4,9 @@ import Products from './Products';
 import Footer from './Footer';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from "react-i18next";
+import { productService } from './services/supabaseClient';
 
 function Home() {
-  const _UrlPort = "/api/";
-  // const _UrlPort = "http://localhost:5081";
-  // const _UrlPort = "http://localhost:8000";
-  // const _UrlPort = "https://mak.ct.ws";
-  // const _UrlPort = "http://ayaloli-001-site1.ntempurl.com";
 
   const { t } = useTranslation();
 
@@ -24,14 +20,18 @@ function Home() {
 
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch(_UrlPort, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setProducts(data.rows.map(product => ({ ...product, quantity: 1 })));
-      })
+    const fetchProducts = async () => {
+      try {
+        const data = await productService.getProducts();
+        setProducts(data.map(product => ({ ...product, quantity: 1 })));
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        // Fallback to an empty array or show an error message
+        setProducts([]);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   const [cartItems, setCartItems] = useState([]);
@@ -40,15 +40,25 @@ function Home() {
     if (cartItems.length > 0) {
       const ids = cartItems.map(item => item.id);
 
-      fetch(_UrlPort + '/cart/z?ids=' + ids.join(','))
-        .then(response => response.json())
-        .then(data => {
-          const updatedCart = data.rows.map(product => {
-            const cartItem = cartItems.find(item => item.id === product.id);
-            return { ...product, quantity: cartItem ? cartItem.quantity : 1 };
-          });
+      // Fetch individual products for the cart
+      const fetchCartProducts = async () => {
+        try {
+          const uniqueIds = [...new Set(ids)]; // Remove duplicate IDs
+          let updatedCart = [];
+
+          for (const id of uniqueIds) {
+            const product = await productService.getProductById(id);
+            const cartItem = cartItems.find(item => item.id === id);
+            updatedCart.push({ ...product, quantity: cartItem ? cartItem.quantity : 1 });
+          }
+
           setCartItems(updatedCart);
-        });
+        } catch (error) {
+          console.error('Error fetching cart products:', error);
+        }
+      };
+
+      fetchCartProducts();
     } else {
       setCartItems([]);
     }
@@ -91,52 +101,54 @@ function Home() {
     }));
   };
 
-  const submitOrder = () => {
+  const submitOrder = async () => {
     if (!customerInfo.name || !customerInfo.phone) {
       alert(t('fillRequiredFields'));
       return;
     }
 
-    const orderData = {
-      ...customerInfo,
-      products: cartItems.map(item => ({
-        id: item.id,
-        quantity: item.quantity
-      })),
-      total: cartItems.reduce(
+    try {
+      // Calculate the total based on cart items
+      const total = cartItems.reduce(
         (sum, product) => sum + Number(product.price) * product.quantity, 0
-      ).toFixed(2)
-    };
+      );
 
-    fetch(_UrlPort + '/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(orderData)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        alert('🎉 OK');
-        setCartItems([]);
-        setCustomerInfo({
-          name: '',
-          email: '',
-          phone: '',
-          address: '',
-          coupon_code: ''
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert(t('orderError'));
+      // Create order data for each product in the cart
+      const orderPromises = cartItems.map(item => {
+        const orderData = {
+          name: customerInfo.name,
+          email: customerInfo.email,
+          phone: customerInfo.phone,
+          address: customerInfo.address,
+          coupon_code: customerInfo.coupon_code,
+          coupon_value: 0, // Assuming no coupon value calculation in this basic setup
+          status: 'pending',
+          total: total,
+          product_name: item.nameEN, // Using English name as product name
+          product_price: item.price,
+          quantity: item.quantity
+        };
+
+        // Create order in Supabase
+        return orderService.createOrder(orderData);
       });
+
+      // Wait for all orders to be created
+      await Promise.all(orderPromises);
+
+      alert('🎉 OK');
+      setCartItems([]);
+      setCustomerInfo({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        coupon_code: ''
+      });
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      alert(t('orderError'));
+    }
   };
 
   const [isMobile, setIsMobile] = useState(false);
