@@ -8,7 +8,7 @@ function BottomNav({ activeTab, setActiveTab, cartCount }) {
     { id: 'shop', icon: 'category', label: t('shop') },
     { id: 'blogs', icon: 'calendar', label: t('blogs') }, // Using calendar icon for blogs/news
     { id: 'cart', icon: 'cart', label: t('yourCart'), badge: cartCount },
-    { id: 'profile', icon: 'user', label: t('contact') }
+    { id: 'profile', icon: 'phone', label: t('contact') }
   ];
 
   return (
