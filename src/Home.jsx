@@ -170,7 +170,7 @@ function Home() {
         {/* Mobile Header */}
         <div className="mobile-header">
           <img src="images/logo.png" style={{ height: '30px' }} alt="logo" />
-          <LanguageSelector />
+          {activeTab !== 'profile' && <LanguageSelector />}
         </div>
 
         {/* Content Container */}
@@ -178,7 +178,7 @@ function Home() {
           {activeTab === 'shop' && (
             <>
               <div style={{ textAlign: 'center', marginBottom: '20px' }} >
-                <img src={t('mobileBanner')} alt="banner" style={{ width: '95%', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} />
+                <img src={t('mobileBanner')} alt="banner" className="mobile-banner" />
               </div>
               <div className="container-fluid">
                 <h3 className="mb-3">{t('trendingProducts')}</h3>
@@ -223,7 +223,6 @@ function Home() {
                   <p><strong>Email:</strong> contact@maisonargankaty.com</p>
                   <p><strong>Phone:</strong> +212 600 000 000</p>
                   <hr />
-                  <Nav />
                   {/* Nav here renders links which might be weird in profile tab, but okay for now */}
                 </div>
               </div>
