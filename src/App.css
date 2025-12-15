@@ -303,12 +303,12 @@ select.status-select {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: #212529;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
-  padding: 12px 10px 25px;
+  padding: 10px;
   /* Extra padding for safe area */
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
   /* Softer, larger shadow */
