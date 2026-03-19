@@ -24,7 +24,7 @@ function Products({ products, onAddToCart, setProducts }) {
 
   return (
     <>
-      <div className="product-grid row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-3">
+      <div style={{ display: 'flex', justifyContent: 'center' }} className="product-grid row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-3">
         {sortedProducts.map((product, index) => (
           <div className="col" key={product.id || index}>
             <div className="product-item">
