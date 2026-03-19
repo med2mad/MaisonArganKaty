@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Footer2 from './Footer2';
-import { orderService } from './services/supabaseClient';
+import { orderService } from './services/apiClient';
 
 function OrderDetail() {
   const { id } = useParams();
@@ -27,7 +27,7 @@ function OrderDetail() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const data = await orderService.getOrderWithProducts(id);
+        const data = await orderService.getOrderById(id);
         setOrder(data);
       } catch (err) {
         setError(err.message);
@@ -128,19 +128,19 @@ function OrderDetail() {
                         <td>
                           <div className="d-flex align-items-center">
                             <img
-                              src={'/images/products/' + order_product.product.photo}
-                              alt={order_product.product.name}
+                              src={'/images/products/' + order_product.Product.photo}
+                              alt={order_product.Product.nameEN}
                               style={{ width: '50px', marginRight: '15px' }}
                             />
                             <div>
-                              <h6 className="mb-0">{order_product.product.nameEN}</h6>
-                              <small className="text-muted">{order_product.product.nameCH}</small>
+                              <h6 className="mb-0">{order_product.Product.nameEN}</h6>
+                              <small className="text-muted">{order_product.Product.nameCH}</small>
                             </div>
                           </div>
                         </td>
-                        <td>{order_product.product.price} DH</td>
+                        <td>{order_product.Product.price} DH</td>
                         <td>{order_product.quantity}</td>
-                        <td>{(order_product.product.price * order_product.quantity).toFixed(2)} DH</td>
+                        <td>{(order_product.Product.price * order_product.quantity).toFixed(2)} DH</td>
                       </tr>
                     ))
                   ) : (

@@ -42,7 +42,7 @@ function Products({ products, onAddToCart, setProducts }) {
               </figure>
               <h3
                 style={{ cursor: 'default' }}
-                className={`productTitle fw-bold fs-5 mb-1 ${isMobile ? 'mobile-title' : ''}`}
+                className={`productTitle fw-bold  ${isMobile ? 'mobile-title' : ''}`}
                 title={product[localStorage.getItem('name') || 'nameEN']}
               >
                 {product[localStorage.getItem('name') || 'nameEN']}

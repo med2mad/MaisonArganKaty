@@ -695,7 +695,8 @@ h6 {
   font-size: 22px;
   line-height: 30px;
   text-transform: capitalize;
-  color: #222222;
+  color: #ffaf00;
+  text-align: center !important;
 }
 
 .product-item .product-qty {

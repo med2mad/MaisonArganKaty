@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { orderService } from './services/supabaseClient';
+import { orderService } from './services/apiClient';
 
 function StatusDropdown({ currentStatus, orderId, onStatusChange }) {
   const [status, setStatus] = useState(currentStatus);

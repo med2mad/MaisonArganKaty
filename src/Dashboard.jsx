@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import StatusDropdown from './StatusDropdown';
 import Footer2 from './Footer2';
-import { orderService } from './services/supabaseClient';
+import { orderService } from './services/apiClient';
 
 function OrdersDashboard() {
   const correctPassword = '1234';
@@ -73,6 +73,7 @@ function OrdersDashboard() {
     const fetchOrders = async () => {
       try {
         const data = await orderService.getOrders();
+        // The API returns orders with order_products included
         setOrders(data);
       } catch (err) {
         setError1(err.message);

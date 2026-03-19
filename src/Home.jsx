@@ -4,7 +4,7 @@ import Products from './Products';
 import Footer from './Footer';
 import LanguageSelector from './LanguageSelector';
 import { useTranslation } from "react-i18next";
-import { productService, orderService } from './services/supabaseClient';
+import { productService, orderService } from './services/apiClient';
 import CartSection from './CartSection';
 import BlogSection from './BlogSection';
 import BottomNav from './BottomNav';
@@ -50,13 +50,12 @@ function Home() {
       const fetchCartProducts = async () => {
         try {
           const uniqueIds = [...new Set(ids)];
-          let updatedCart = [];
-
-          for (const id of uniqueIds) {
-            const product = await productService.getProductById(id);
-            const cartItem = cartItems.find(item => item.id === id);
-            updatedCart.push({ ...product, quantity: cartItem ? cartItem.quantity : 1 });
-          }
+          const fetchedProducts = await productService.getProductsByIds(uniqueIds);
+          
+          const updatedCart = fetchedProducts.map(product => {
+            const cartItem = cartItems.find(item => item.id === product.id);
+            return { ...product, quantity: cartItem ? cartItem.quantity : 1 };
+          });
 
           setCartItems(updatedCart);
         } catch (error) {
@@ -118,25 +117,21 @@ function Home() {
         (sum, product) => sum + Number(product.price) * product.quantity, 0
       );
 
-      const orderPromises = cartItems.map(item => {
-        const orderData = {
-          name: customerInfo.name,
-          email: customerInfo.email,
-          phone: customerInfo.phone,
-          address: customerInfo.address,
-          coupon_code: customerInfo.coupon_code,
-          coupon_value: 0,
-          status: 'pending',
-          total: total,
-          product_name: item.nameEN,
-          product_price: item.price,
+      // Format order data for ASP.NET back-end
+      const orderData = {
+        name: customerInfo.name,
+        email: customerInfo.email,
+        phone: customerInfo.phone,
+        address: customerInfo.address,
+        coupon_code: customerInfo.coupon_code,
+        total: total,
+        products: cartItems.map(item => ({
+          id: item.id,
           quantity: item.quantity
-        };
+        }))
+      };
 
-        return orderService.createOrder(orderData);
-      });
-
-      await Promise.all(orderPromises);
+      await orderService.createOrder(orderData);
 
       alert('🎉 OK');
       setCartItems([]);
