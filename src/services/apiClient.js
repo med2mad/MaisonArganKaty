@@ -1,11 +1,11 @@
 // API Service for ASP.NET Back-end
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://misonargankaty.azurewebsites.net/';
 
 // Helper function for API calls
 async function apiCall(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
-  
+
   const config = {
     ...options,
     headers: {
@@ -15,12 +15,12 @@ async function apiCall(endpoint, options = {}) {
   };
 
   const response = await fetch(url, config);
-  
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: response.statusText }));
     throw new Error(error.message || `HTTP ${response.status}: ${response.statusText}`);
   }
-  
+
   return response.json();
 }
 
